@@ -17,11 +17,9 @@ services:
       - key: DATABASE_URL
         value: sqlite+aiosqlite:///./educal.db
 
-  # Frontend React App (Vite)
-  - type: web
+  # Frontend React App (Vite Static Site)
+  - type: static
     name: educal-frontend
-    plan: free
-    runtime: static
     rootDir: frontend
     buildCommand: npm install --legacy-peer-deps && npm run build
     staticPublishPath: dist
@@ -29,6 +27,3 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-      - type: rewrite
-        source: /api/*
-        destination: https://educal-backend-api.onrender.com/api/*
