@@ -2,6 +2,7 @@ services:
   # Backend FastAPI API
   - type: web
     name: educal-backend-api
+    plan: free
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
@@ -19,6 +20,7 @@ services:
   # Frontend React App (Vite)
   - type: web
     name: educal-frontend
+    plan: free
     runtime: static
     rootDir: frontend
     buildCommand: npm install --legacy-peer-deps && npm run build
@@ -27,9 +29,6 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: educal-backend-api
-          property: host
+      - type: rewrite
+        source: /api/*
+        destination: https://educal-backend-api.onrender.com/api/*
