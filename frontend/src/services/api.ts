@@ -15,8 +15,10 @@ import type {
   User,
 } from '../types'
 
-// Use VITE_API_URL if configured (production domain), otherwise default to relative path /api/v1 (dev proxy)
-const BASE_HOST = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') : ''
+// Use VITE_API_URL if configured, otherwise connect directly to localhost:8000 in dev
+const BASE_HOST = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/$/, '')
+  : (import.meta.env.DEV ? 'http://localhost:8000' : '')
 const API_BASE = `${BASE_HOST}/api/v1`
 
 export const apiClient = axios.create({
