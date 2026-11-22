@@ -18,8 +18,9 @@ services:
         value: sqlite+aiosqlite:///./educal.db
 
   # Frontend React App (Vite Static Site)
-  - type: static
+  - type: web
     name: educal-frontend
+    runtime: static
     rootDir: frontend
     buildCommand: npm install --legacy-peer-deps && npm run build
     staticPublishPath: dist
