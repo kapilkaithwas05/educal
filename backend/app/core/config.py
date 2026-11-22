@@ -1,6 +1,6 @@
 """Application configuration via pydantic-settings."""
 import json
-from typing import List
+from typing import List, Union
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -18,11 +18,11 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+aiosqlite:///./educal.db"
 
     # CORS
-    cors_origins: List[str] = ["*"]
+    cors_origins: Union[List[str], str] = ["*"]
 
-    @field_validator("cors_origins", mode="before")
+    @field_validator("cors_origins", mode="after")
     @classmethod
-    def parse_cors_origins(cls, v):
+    def assemble_cors(cls, v):
         if isinstance(v, str):
             v_clean = v.strip()
             if v_clean.startswith("[") and v_clean.endswith("]"):
